@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Start Session</title>
+{% endblock head %}
+
+{% block body %}
+<div class="form-style-2">
+    <div class="form-style-2-heading">Provide the information below to start the experiment</div>
+    <form action="" method="post">
+    <label for="field1"><span>Email <span class="required">*</span></span><input type="text" class="input-field" name="field1" value="" /></label>
+    <label for="field2"><span>Email (verify) <span class="required">*</span></span><input type="text" class="input-field" name="field2" value="" /></label>
+    <label for="field4"><span>User Type</span><select name="field4" class="select-field">
+    <option value="Subject">Subject</option>
+    <option value="Researcher">Researcher</option>
+    <option value="Developer">Developer</option>
+    </select></label>
+    <label for="field5"><span>Note <span class="required">*</span></span><textarea name="field5" class="textarea-field"></textarea></label>
+    
+    <label><span> </span><input type="submit" value="Submit" /></label>
+    </form>
+    </div>
+{% endblock body %}

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% from "_formhelpers.html" import render_field %}
+{% block head %}
+<title>Start Session</title>
+<style>
+.toa {
+background-color: pink;
+}
+  #formdiv {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+
+  #welcome {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+
+  label {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+
+  input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+
+</style>
+{% endblock head %}
+
+{% block body%}
+
+<div id="formdiv">
+    <h2 id="welcome">Provide the information below to start the experiment</h2>
+
+    <form method=post>
+    <dl>
+      {{ render_field(form.email,placeholder="Your Email Address ...")}}
+      {{ render_field(form.verify,placeholder="Your Email Address (Again) ...") }}
+      {{ render_field(form.howdy)}}
+      {{ render_field(form.note,placeholder="Leave a note ...") }}
+      {{ render_field(form.TOA) }}
+    </dl>
+    <p><input type=submit value=submit>
+  </form>
+</div>
+
+{% endblock body %}

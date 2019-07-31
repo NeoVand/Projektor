@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Experiment</title>
+<style>
+
+img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 50%;
+}
+  button{
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+    display: block;
+    width:50%;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+}
+  #welcome {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+
+  #thanks {
+      display: none;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+  }
+
+  #eeguri {
+      font-family: 'Courier New', Courier, monospace;
+      font-size:6pt;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+      border-style:solid;
+      border-color:#287EC7;
+  }
+  #eegmessgae {
+      font-family:Arial, Helvetica, sans-serif;
+      font-size:10pt;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+  }
+
+
+
+</style>
+{% endblock head %}
+
+{% block body%}
+<div id='message'>
+    <p id='eegmessgae'>Your EEG should be saved in:</p>
+    <p id='eeguri'>{{url}}</p>
+    <div id="welcome" class="welcome">Please seat comfortably with your hands on your laps. You are not supposed to move unless the program asks you to. You can always stop the experiment by closing the browser window.
+        <img id='seat' class="welcome" src="{{url_for('static', filename='images/sitting.png')}}" alt="" srcset="">
+    </div>
+
+    <div id="thanks" class="thanks">Thank you for participating in the experiment. Click "Done" to save the data! or chick "Next" to watch another video.
+    </div>
+
+</div>
+
+<!-- <video id="exp" width="320" height="240">
+        <source src="{{ url_for('static', filename='video/v.mp4') }}" type="video/mp4" style="display: none;">
+      Your browser does not support the video tag.
+      </video> -->
+<video id="cd" width="320" height="240">
+    <source src="{{ url_for('static', filename='assets/cd.mp4') }}" type="video/mp4" style="display: none;">
+    Your browser does not support the video tag.
+    </video>
+
+
+<button id="play" type="button">Play Video</button>
+
+<button id="Done" type="button", style="display: none;">Done</button>
+
+
+<script>
+    window.addEventListener("load", function(){
+// document.getElementById("exp").style.display = "none";
+document.getElementById("cd").style.display = "none";
+bd = document.getElementById('Done');
+bd.addEventListener('click',save_data);
+
+
+btn = document.getElementById('play');
+btn.addEventListener('click', playVid);
+
+welcome = document.getElementById('welcome');
+thanks = document.getElementById('thanks');
+
+
+let vidcount = 0;
+let init_time ;
+let finish_time ;
+let watch_log = {};
+
+    
+function playVid() {
+    vidcount += 1;
+    init_time = Date.now().toString();
+    watch_log['init']=init_time;
+    let first_video = true;
+    let vid = document.getElementById('cd');
+    vid.style.display = "block";
+    vid.play();
+    toggleFullscreen(vid); 
+    
+    vid.onended = function(){
+        if(first_video){
+            vid.setAttribute('src',"{{ url_for('static', filename='video/v.mp4') }}");
+            first_video = false;
+            vid.play();
+            btn.style.display = 'none';
+            bd.style.display = 'block';
+            thanks.style.display = 'block';
+            welcome.style.display = 'none';
+        }
+        else{
+            toggleFullscreen(vid)
+            vid.style.display = 'none';
+            finish_time = Date.now().toString();
+            watch_log['finish']=finish_time;
+
+        }
+    vid.ontimeupdate = function(){
+        t = Math.round(parseFloat("{{fr}}")*vid.currentTime);
+        const xhr= new XMLHttpRequest();
+        xhr.open("POST","{{url_for('log')}}");
+        xhr.setRequestHeader("Content-type","application/json");
+        xhr.send(JSON.stringify({"current_time":t}));
+        
+    }
+        
+    }
+
+} 
+
+// function playExp() { 
+//     let exp = document.getElementById('exp')
+//     exp.style.display = "block"
+//     exp.play();
+//     toggleFullscreen(exp); 
+// } 
+
+
+function toggleFullscreen(elem) {
+    if (!document.fullscreenElement) {
+    elem.requestFullscreen().catch(err => {
+        alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+    });} 
+    else {
+    document.exitFullscreen();
+    }
+}
+
+function checkData()
+{
+    location.href = "{{url_for('register')}}";
+}
+
+function save_data(){
+    let vid = document.getElementById('cd');
+    end_time = Date.now().toString();
+    if (!('finish' in watch_log)){
+        watch_log['finish']=end_time;
+    }
+    watch_log['experiment_ended']=end_time;
+    const xhr= new XMLHttpRequest();
+    xhr.onreadystatechange = checkData;
+    xhr.open("POST","{{url_for('exp_end')}}");
+        xhr.setRequestHeader("Content-type","application/json");
+        xhr.send(JSON.stringify(watch_log));
+}
+
+});
+</script>
+{% endblock body %}
