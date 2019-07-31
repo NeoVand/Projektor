@@ -12,6 +12,7 @@ import json
 import argparse
 
 default_folder = "E:\\Dropbox (MIT)\\inSight\\Experiment\\Recordings\\fl_test"
+default_fr = 32.0
 eeg_exts = ['edf','easy']
 
 
@@ -138,7 +139,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--path', nargs='?', default=default_folder, type=str
          ,help="path to the folder of folders of videos")
-    parser.add_argument('--fr', nargs='?', default=32.0, type=float, help="video frame rate")
+    parser.add_argument('--fr', nargs='?', default=default_fr, type=float, help="video frame rate")
 
     args = parser.parse_args()
     is_valid_folder(parser,args.path)
