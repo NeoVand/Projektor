@@ -44,6 +44,7 @@ The Video Files Should be organized in subfolders. Metadata files can be placed 
     .
     .
 ```
+You can download a sample folder with 10 hours of multimodal visual stimuls (and metadata) here: https://www.dropbox.com/sh/2ry5gyp5382eofi/AAANj5HiprW0O6Jr1XaMq4Bva?dl=0
 ## Running the program
 To run the program, we should run `app.py` with 2 arguments. The first argument `--path` tells the program where to look for videos.The second one `--fr` asks for the frame-rate of the video.
 ```console
