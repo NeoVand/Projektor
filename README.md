@@ -10,7 +10,7 @@ git clone https://github.com/NeoVand/Projektor.git
 ```
 3. Create a python 3.7 environment by typing this command in the Anaconda Prompt (or any shell with conda in PATH):
 ```console
-cd projektor
+cd Projektor
 conda create -n projektor python=3.7
 ```
 4. Activate the recently made environment:
@@ -19,7 +19,7 @@ conda activate projektor
 ```
 5. Install the dependencies:
 ```console
-conda install --yes --file requirements.txt
+pip install -r requirements.txt
 ```
 ## Organizing Video Files
 The Video Files Should be organized in subfolders. Metadata files can be placed in the same folder with video files. ***Each folder must only inlude a single file.*** 
