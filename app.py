@@ -93,6 +93,7 @@ def exp_end():
         out = {'email':session['email'],'folder':folder,'session_start_time':session['start_time'],'note':session['note'], 'howdy':session['howdy'],'vid_times':session['vidtimes']}
         json.dump(out,jsf)
     flash('Thank you!')
+    os.remove(os.path.join(os.curdir,'static','video','v.mp4'))
     return 'done'
 @app.route('/experiment')
 def experiment():
