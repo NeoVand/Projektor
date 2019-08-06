@@ -50,6 +50,7 @@ To run the program, we should run `app.py` with 2 arguments. The first argument 
 ```console
 python app.py --path "<THE PATH TO THE ROOT OF THE VIDEO_FOLDER>" --fr <THE CORRECT FRAME RATE OF THE VIDEOS>
 ```
+Replace the <> with your path and framerate.
 Now point your browser (Chrome or Firefox) to:
 ```console
 http://127.0.0.1:5000/
